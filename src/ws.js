@@ -1,29 +1,38 @@
-let socket = null;
+import { useEffect, useState } from "react";
+import { connect, sendMessage } from "./ws";
 
-export function connect(conversationId, onMessage) {
-  socket = new WebSocket("ws://localhost:4000");
+export default function Chat({ conversationId = "default-room" }) {
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
 
-  socket.onopen = () => {
-    socket.send(JSON.stringify({
-      type: "join",
-      conversationId,
-      userId: "michael"
-    }));
-  };
+  useEffect(() => {
+    connect(conversationId, (data) => {
+      if (data.type === "message") {
+        setMessages((prev) => [...prev, data.message]);
+      }
+    });
+  }, [conversationId]);
 
-  socket.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    onMessage(data);
-  };
-}
+  function handleSend() {
+    if (!input.trim()) return;
+    sendMessage(conversationId, input);
+    setInput("");
+  }
 
-export function sendMessage(conversationId, text) {
-  if (!socket || socket.readyState !== WebSocket.OPEN) return;
+  return (
+    <div>
+      <div>
+        {messages.map((m) => (
+          <div key={m.id}>{m.text}</div>
+        ))}
+      </div>
 
-  socket.send(JSON.stringify({
-    type: "message",
-    conversationId,
-    userId: "michael",
-    text
-  }));
+      <input
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      />
+
+      <button onClick={handleSend}>Send</button>
+    </div>
+  );
 }
