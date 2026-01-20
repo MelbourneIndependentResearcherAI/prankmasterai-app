@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { connect, sendMessage } from "./ws";
+import { connect, sendMessage } from "../ws";
 
 export default function Chat({ conversationId }) {
   const [messages, setMessages] = useState([]);
