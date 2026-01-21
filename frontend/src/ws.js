@@ -3,7 +3,9 @@ let socket;
 export function connect(roomId, onMessage) {
   socket = new WebSocket(`wss://prankmasterai-app.onrender.com/ws/${roomId}`);
 
-  socket.onopen = () => console.log("WebSocket connected");
+  socket.onopen = () => {
+    console.log("WebSocket connected");
+  };
 
   socket.onmessage = (event) => {
     try {
@@ -14,7 +16,9 @@ export function connect(roomId, onMessage) {
     }
   };
 
-  socket.onerror = (err) => console.error("WebSocket error:", err);
+  socket.onerror = (err) => {
+    console.error("WebSocket error:", err);
+  };
 }
 
 export function sendMessage(roomId, text) {

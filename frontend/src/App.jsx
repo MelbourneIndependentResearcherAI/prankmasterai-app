@@ -1,21 +1,19 @@
-import { useEffect, useState } from "react";
-import { connect, sendMessage } from "./ws.js";
+import { useState } from "react";
 
-export default function Chat({ conversationId = "default-room" }) {
+export default function Chat() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
 
-  useEffect(() => {
-    connect(conversationId, (data) => {
-      if (data.type === "message") {
-        setMessages((prev) => [...prev, data.message]);
-      }
-    });
-  }, [conversationId]);
-
   function handleSend() {
     if (!input.trim()) return;
-    sendMessage(conversationId, input);
+
+    const fakeMessage = {
+      id: Date.now(),
+      userId: "You",
+      text: input,
+    };
+
+    setMessages((prev) => [...prev, fakeMessage]);
     setInput("");
   }
 
