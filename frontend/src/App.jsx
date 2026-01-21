@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { connect, sendMessage } from "./ws";
+import { connect, sendMessage } from "./ws.js";
 
 export default function Chat({ conversationId = "default-room" }) {
   const [messages, setMessages] = useState([]);
@@ -45,12 +45,7 @@ export default function Chat({ conversationId = "default-room" }) {
 }
 
 const styles = {
-  container: {
-    padding: 20,
-    maxWidth: 600,
-    margin: "0 auto",
-    fontFamily: "sans-serif",
-  },
+  container: { padding: 20, maxWidth: 600, margin: "0 auto", fontFamily: "sans-serif" },
   messages: {
     border: "1px solid #ccc",
     padding: 10,
@@ -59,20 +54,9 @@ const styles = {
     marginBottom: 10,
     borderRadius: 8,
   },
-  message: {
-    padding: "6px 0",
-    borderBottom: "1px solid #eee",
-  },
-  inputRow: {
-    display: "flex",
-    gap: 10,
-  },
-  input: {
-    flex: 1,
-    padding: 10,
-    borderRadius: 6,
-    border: "1px solid #ccc",
-  },
+  message: { padding: "6px 0", borderBottom: "1px solid #eee" },
+  inputRow: { display: "flex", gap: 10 },
+  input: { flex: 1, padding: 10, borderRadius: 6, border: "1px solid #ccc" },
   button: {
     padding: "10px 20px",
     borderRadius: 6,
