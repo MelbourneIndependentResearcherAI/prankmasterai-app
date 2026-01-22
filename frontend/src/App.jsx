@@ -1,40 +1,78 @@
 import { useState } from "react";
+import { sendMessageToBackend } from "./api";
 
-export default function Chat() {
+export default function App() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
 
-  function handleSend() {
+  async function handleSend() {
     if (!input.trim()) return;
 
-    const fakeMessage = {
-      id: Date.now(),
-      userId: "You",
-      text: input,
-    };
+    const userMessage = { sender: "You", text: input };
+    setMessages(prev => [...prev, userMessage]);
 
-    setMessages((prev) => [...prev, fakeMessage]);
+    try {
+      const backendReply = await sendMessageToBackend(input);
+
+      const botMessage = {
+        sender: "Bot",
+        text: backendReply.reply || "No response"
+      };
+
+      setMessages(prev => [...prev, botMessage]);
+    } catch (err) {
+      const errorMessage = {
+        sender: "Bot",
+        text: "Error contacting backend"
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    }
+
     setInput("");
   }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.messages}>
-        {messages.map((m) => (
-          <div key={m.id} style={styles.message}>
-            <strong>{m.userId}:</strong> {m.text}
+    <div style={{
+      width: "100%",
+      maxWidth: "500px",
+      margin: "0 auto",
+      padding: "20px",
+      fontFamily: "Arial"
+    }}>
+      <h2>PrankMasterAI Chat</h2>
+
+      <div style={{
+        border: "1px solid #ccc",
+        padding: "10px",
+        height: "400px",
+        overflowY: "auto",
+        marginBottom: "10px"
+      }}>
+        {messages.map((msg, index) => (
+          <div key={index} style={{ marginBottom: "10px" }}>
+            <strong>{msg.sender}:</strong> {msg.text}
           </div>
         ))}
       </div>
 
-      <div style={styles.inputRow}>
+      <div style={{ display: "flex", gap: "10px" }}>
         <input
-          style={styles.input}
+          type="text"
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={e => setInput(e.target.value)}
           placeholder="Type a message..."
+          style={{ flex: 1, padding: "10px" }}
         />
-        <button style={styles.button} onClick={handleSend}>
+        <button
+          onClick={handleSend}
+          style={{
+            padding: "10px 20px",
+            background: "#007bff",
+            color: "white",
+            border: "none",
+            cursor: "pointer"
+          }}
+        >
           Send
         </button>
       </div>
@@ -42,25 +80,3 @@ export default function Chat() {
   );
 }
 
-const styles = {
-  container: { padding: 20, maxWidth: 600, margin: "0 auto", fontFamily: "sans-serif" },
-  messages: {
-    border: "1px solid #ccc",
-    padding: 10,
-    height: 400,
-    overflowY: "auto",
-    marginBottom: 10,
-    borderRadius: 8,
-  },
-  message: { padding: "6px 0", borderBottom: "1px solid #eee" },
-  inputRow: { display: "flex", gap: 10 },
-  input: { flex: 1, padding: 10, borderRadius: 6, border: "1px solid #ccc" },
-  button: {
-    padding: "10px 20px",
-    borderRadius: 6,
-    background: "#007bff",
-    color: "white",
-    border: "none",
-    cursor: "pointer",
-  },
-};
