@@ -12,7 +12,6 @@ export default function Chat() {
     const userText = input;
     setInput("");
 
-    // Add user's message immediately
     const userMessage = {
       id: Date.now(),
       userId: "You",
@@ -23,7 +22,6 @@ export default function Chat() {
     setLoading(true);
 
     try {
-      // Send to backend
       const reply = await sendMessage(userText);
 
       const botMessage = {
