@@ -18,49 +18,28 @@ export default function Chat() {
   }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.messages}>
+    <div style={{ padding: 20, maxWidth: 600, margin: "0 auto" }}>
+      <h2 style={{ textAlign: "center" }}>PrankMasterAi Chat</h2>
+
+      <div style={{ border: "1px solid #ccc", padding: 10, height: 400, overflowY: "auto", marginBottom: 10 }}>
         {messages.map((m) => (
-          <div key={m.id} style={styles.message}>
+          <div key={m.id} style={{ padding: "6px 0", borderBottom: "1px solid #eee" }}>
             <strong>{m.userId}:</strong> {m.text}
           </div>
         ))}
       </div>
 
-      <div style={styles.inputRow}>
+      <div style={{ display: "flex", gap: 10 }}>
         <input
-          style={styles.input}
+          style={{ flex: 1, padding: 10 }}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type a message..."
         />
-        <button style={styles.button} onClick={handleSend}>
+        <button style={{ padding: "10px 20px" }} onClick={handleSend}>
           Send
         </button>
       </div>
     </div>
   );
 }
-
-const styles = {
-  container: { padding: 20, maxWidth: 600, margin: "0 auto", fontFamily: "sans-serif" },
-  messages: {
-    border: "1px solid #ccc",
-    padding: 10,
-    height: 400,
-    overflowY: "auto",
-    marginBottom: 10,
-    borderRadius: 8,
-  },
-  message: { padding: "6px 0", borderBottom: "1px solid #eee" },
-  inputRow: { display: "flex", gap: 10 },
-  input: { flex: 1, padding: 10, borderRadius: 6, border: "1px solid #ccc" },
-  button: {
-    padding: "10px 20px",
-    borderRadius: 6,
-    background: "#007bff",
-    color: "white",
-    border: "none",
-    cursor: "pointer",
-  },
-};
