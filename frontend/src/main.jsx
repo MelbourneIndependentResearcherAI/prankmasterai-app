@@ -1,17 +1,9 @@
-export async function sendMessage(text) {
-  const response = await fetch(
-    "https://prankmasterai-app.onrender.com/api/message",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text }),
-    }
-  );
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
 
-  if (!response.ok) {
-    throw new Error("Network error");
-  }
-
-  const data = await response.json();
-  return data.reply;
-}
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
