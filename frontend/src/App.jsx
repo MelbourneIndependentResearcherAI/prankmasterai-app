@@ -32,24 +32,31 @@ export default function App() {
   }
 
   return (
-    <div style={{
-      width: "100%",
-      maxWidth: "500px",
-      margin: "0 auto",
-      padding: "20px",
-      fontFamily: "Arial"
-    }}>
-      <h2>PrankMasterAI Chat</h2>
+    <div
+      style={{
+        width: "100%",
+        maxWidth: "500px",
+        margin: "0 auto",
+        padding: "20px",
+        fontFamily: "Arial"
+      }}
+    >
+      <h2 style={{ textAlign: "center" }}>PrankMasterAI Chat</h2>
 
-      <div style={{
-        border: "1px solid #ccc",
-        padding: "10px",
-        height: "400px",
-        overflowY: "auto",
-        marginBottom: "10px"
-      }}>
+      <div
+        style={{
+          border: "1px solid #ccc",
+          padding: "10px",
+          height: "400px",
+          overflowY: "auto",
+          marginBottom: "10px"
+        }}
+      >
         {messages.map((msg, index) => (
-          <div key={index} style={{ marginBottom: "10px" }}>
+          <div
+            key={index}
+            style={{ padding: "6px 0", borderBottom: "1px solid #eee" }}
+          >
             <strong>{msg.sender}:</strong> {msg.text}
           </div>
         ))}
@@ -63,6 +70,7 @@ export default function App() {
           placeholder="Type a message..."
           style={{ flex: 1, padding: "10px" }}
         />
+
         <button
           onClick={handleSend}
           style={{
@@ -79,4 +87,3 @@ export default function App() {
     </div>
   );
 }
-
