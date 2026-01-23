@@ -1,5 +1,5 @@
 export async function sendMessageToBackend(message) {
-  const response = await fetch("https://your-render-backend-url.onrender.com/api/message", {
+  const response = await fetch("https://prankmasterai-app.onrender.com/api/message", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
