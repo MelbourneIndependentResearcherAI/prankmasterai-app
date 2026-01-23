@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { sendMessage } from "./api";
 
 export default function Chat() {
@@ -43,11 +43,17 @@ export default function Chat() {
     setLoading(false);
   }
 
+  useEffect(() => {
+    const box = document.getElementById("chatBox");
+    if (box) box.scrollTop = box.scrollHeight;
+  }, [messages, loading]);
+
   return (
     <div style={{ padding: 20, maxWidth: 600, margin: "0 auto" }}>
       <h2 style={{ textAlign: "center" }}>PrankMasterAI Chat</h2>
 
       <div
+        id="chatBox"
         style={{
           border: "1px solid #ccc",
           padding: 10,
@@ -62,6 +68,8 @@ export default function Chat() {
             style={{
               padding: "6px 0",
               borderBottom: "1px solid #eee",
+              textAlign: m.userId === "You" ? "right" : "left",
+              color: m.userId === "You" ? "#333" : "#0077cc",
             }}
           >
             <strong>{m.userId}:</strong> {m.text}
