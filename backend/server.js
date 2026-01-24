@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import router from "./routes.js";
+import messageRoute from "./routes/message.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -8,8 +8,13 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Use routes
-app.use("/", router);
+// Health check
+app.get("/", (req, res) => {
+  res.send("PrankMasterAI backend is running");
+});
+
+// Routes
+app.use("/api/message", messageRoute);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
