@@ -1,89 +1,56 @@
 import { useState } from "react";
-import { sendMessageToBackend } from "./api";
 
 export default function App() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
 
-  async function handleSend() {
+  async function sendMessage() {
     if (!input.trim()) return;
 
-    const userMessage = { sender: "You", text: input };
-    setMessages(prev => [...prev, userMessage]);
+    const userMessage = input;
+    setInput("");
+
+    setMessages((prev) => [...prev, { role: "user", text: userMessage }]);
 
     try {
-      const backendReply = await sendMessageToBackend(input);
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userMessage }),
+      });
 
-      const botMessage = {
-        sender: "Bot",
-        text: backendReply.reply || "No response"
-      };
+      const data = await res.json();
 
-      setMessages(prev => [...prev, botMessage]);
+      setMessages((prev) => [...prev, { role: "assistant", text: data.reply }]);
     } catch (err) {
-      const errorMessage = {
-        sender: "Bot",
-        text: "Error contacting backend"
-      };
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", text: "Error contacting server." },
+      ]);
     }
-
-    setInput("");
   }
 
   return (
-    <div
-      style={{
-        width: "100%",
-        maxWidth: "500px",
-        margin: "0 auto",
-        padding: "20px",
-        fontFamily: "Arial"
-      }}
-    >
-      <h2 style={{ textAlign: "center" }}>PrankMasterAI Chat</h2>
+    <div style={{ padding: 20, fontFamily: "sans-serif" }}>
+      <h1>PrankMasterAI</h1>
 
-      <div
-        style={{
-          border: "1px solid #ccc",
-          padding: "10px",
-          height: "400px",
-          overflowY: "auto",
-          marginBottom: "10px"
-        }}
-      >
-        {messages.map((msg, index) => (
-          <div
-            key={index}
-            style={{ padding: "6px 0", borderBottom: "1px solid #eee" }}
-          >
-            <strong>{msg.sender}:</strong> {msg.text}
+      <div style={{ marginBottom: 20 }}>
+        {messages.map((m, i) => (
+          <div key={i} style={{ margin: "8px 0" }}>
+            <strong>{m.role}:</strong> {m.text}
           </div>
         ))}
       </div>
 
-      <div style={{ display: "flex", gap: "10px" }}>
-        <input
-          type="text"
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          placeholder="Type a message..."
-          style={{ flex: 1, padding: "10px" }}
-        />
-
-        <button
-          onClick={handleSend}
-          style={{
-            padding: "10px 20px",
-            background: "#007bff",
-            color: "white",
-            border: "none",
-            cursor: "pointer"
-          }}
-        >
-          Send
-        </button>
-      </div>
+      <input
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Type a message..."
+        style={{ width: "70%", padding: 8 }}
+      />
+      <button onClick={sendMessage} style={{ padding: "8px 16px", marginLeft: 8 }}>
+        Send
+      </button>
     </div>
   );
 }
