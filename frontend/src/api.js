@@ -1,12 +1,12 @@
-export async function sendMessageToBackend(message) {
-  const url = `${import.meta.env.VITE_BACKEND_URL}/api/chat`;
+export async function sendMessage(text) {
+  const backendUrl = "https://prankmasterai-app.onrender.com";
 
-  const response = await fetch(url, {
+  const response = await fetch(`${backendUrl}/api/message`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({ message })
+    body: JSON.stringify({ message: text }),
   });
 
   if (!response.ok) {
@@ -14,5 +14,5 @@ export async function sendMessageToBackend(message) {
   }
 
   const data = await response.json();
-  return data;
+  return data.reply;
 }
