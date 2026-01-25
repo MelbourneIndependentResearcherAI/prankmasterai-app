@@ -1,17 +1,10 @@
 import express from "express";
-import cors from "cors";
-import messageRoute from "./routes/message.js";
-import healthRoute from "./routes/health.js";
+const router = express.Router();
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-app.use(cors());
-app.use(express.json());
-
-app.use("/", healthRoute);
-app.use("/api/message", messageRoute);
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+router.post("/", (req, res) => {
+  const { message } = req.body;
+  const reply = `You said: ${message}`;
+  res.json({ reply });
 });
+
+export default router;
