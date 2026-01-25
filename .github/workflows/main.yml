@@ -15,16 +15,21 @@ jobs:
         working-directory: frontend
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Restore executable permissions
+        run: chmod +x node_modules/.bin/* || true
 
       - name: Build project
         run: npm run build
