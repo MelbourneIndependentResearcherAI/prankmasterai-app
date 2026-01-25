@@ -13,19 +13,25 @@ export default function App() {
     setMessages((prev) => [...prev, { role: "user", text: userMessage }]);
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/chat`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMessage }),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/message`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: userMessage })
+        }
+      );
 
       const data = await res.json();
 
-      setMessages((prev) => [...prev, { role: "assistant", text: data.reply }]);
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", text: data.reply }
+      ]);
     } catch (err) {
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", text: "Error contacting server." },
+        { role: "assistant", text: "Error contacting server." }
       ]);
     }
   }
