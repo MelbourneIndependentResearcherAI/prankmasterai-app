@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useState } from "react";
 import { sendMessageToBackend } from "./api";
 
@@ -87,10 +86,4 @@ export default function App() {
       </div>
     </div>
   );
-=======
-import Chat from "./Chat";
-
-export default function App() {
-  return <Chat />;
->>>>>>> 84517a472b8e785994958cd419807d4c31eb3023
 }
