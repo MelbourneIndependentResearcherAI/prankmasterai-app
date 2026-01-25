@@ -1,17 +1,17 @@
 import express from "express";
-const router = express.Router();
+import cors from "cors";
+import messageRoute from "./routes/message.js";
+import healthRoute from "./routes/health.js";
 
-router.post("/", async (req, res) => {
-  try {
-    const { message } = req.body;
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-    const reply = `You said: ${message}`;
+app.use(cors());
+app.use(express.json());
 
-    res.json({ reply });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Server error" });
-  }
+app.use("/", healthRoute);
+app.use("/api/message", messageRoute);
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
-
-export default router;
