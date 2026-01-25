@@ -85,8 +85,6 @@ export default function Chat() {
 
       <div style={{ display: "flex", gap: 10 }}>
         <input
-          id="messageInput"
-          name="message"
           style={{ flex: 1, padding: 10 }}
           value={input}
           onChange={(e) => setInput(e.target.value)}
