@@ -1,9 +1,23 @@
-import Chat from "./Chat";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Inbox from "./components/Inbox";
+import ChatWindow from "./components/ChatWindow";
+import Settings from "./components/Settings";
+import About from "./components/About";
+import MessengerThread from "./components/MessengerThread";
+import "./styles/App.css";
 
 export default function App() {
   return (
-    <div style={{ padding: 20 }}>
-      <Chat />
-    </div>
+    <Router>
+      <div className="app-container">
+        <Routes>
+          <Route path="/" element={<Inbox />} />
+          <Route path="/chat/:threadId" element={<ChatWindow />} />
+          <Route path="/messenger/:threadId" element={<MessengerThread />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
