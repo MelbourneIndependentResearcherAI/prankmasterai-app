@@ -1,26 +1,29 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { getThread, sendMessage } from "../api";
 import "./MessengerThread.css";
 
 export default function MessengerThread() {
   const { threadId } = useParams();
-  const [messages, setMessages] = useState([
-    { id: 1, from: "them", text: "Hey, what's up?" },
-    { id: 2, from: "you", text: "Not much, testing Messenger thread!" },
-  ]);
-
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
 
-  const sendMessage = () => {
+  useEffect(() => {
+    async function load() {
+      const data = await getThread(threadId);
+      setMessages(data.messages || []);
+    }
+    load();
+  }, [threadId]);
+
+  async function handleSend() {
     if (!input.trim()) return;
 
-    setMessages((prev) => [
-      ...prev,
-      { id: Date.now(), from: "you", text: input },
-    ]);
+    const newMsg = await sendMessage(threadId, input);
 
+    setMessages((prev) => [...prev, newMsg]);
     setInput("");
-  };
+  }
 
   return (
     <div className="messenger-thread-container">
@@ -41,12 +44,11 @@ export default function MessengerThread() {
 
       <div className="messenger-input-bar">
         <input
-          type="text"
-          placeholder="Type a message…"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          placeholder="Type a message…"
         />
-        <button onClick={sendMessage}>Send</button>
+        <button onClick={handleSend}>Send</button>
       </div>
     </div>
   );
