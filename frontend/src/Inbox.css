@@ -1,0 +1,47 @@
+.inbox-container {
+  padding: 20px;
+  color: #e0e0e0;
+  background: #0d0d0f;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+
+.inbox-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #7df9ff;
+  text-shadow: 0 0 8px #7df9ff;
+}
+
+.thread-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.thread-item {
+  background: #151518;
+  padding: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid #222;
+  transition: 0.2s ease;
+}
+
+.thread-item:hover {
+  border-color: #7df9ff;
+  box-shadow: 0 0 10px #7df9ff55;
+}
+
+.thread-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #ffffff;
+}
+
+.thread-preview {
+  font-size: 14px;
+  opacity: 0.7;
+}
