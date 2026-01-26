@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getThread, sendMessage } from "../api";
 import "./MessengerThread.css";
