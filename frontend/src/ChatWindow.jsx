@@ -20,7 +20,6 @@ export default function ChatWindow() {
     if (!input.trim()) return;
 
     const newMsg = await sendMessage(threadId, input);
-
     setMessages((prev) => [...prev, newMsg]);
     setInput("");
   }
