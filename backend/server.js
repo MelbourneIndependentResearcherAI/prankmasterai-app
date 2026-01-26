@@ -1,8 +1,8 @@
-import cors from "cors";
+const cors = require("cors");
 
 app.use(
   cors({
-    origin: "*", // Allow Cloudflare Pages frontend
+    origin: "*",
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
   })
