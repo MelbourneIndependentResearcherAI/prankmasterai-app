@@ -1,9 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Inbox from "./components/Inbox";
 import ChatWindow from "./components/ChatWindow";
+import MessengerThread from "./components/MessengerThread";
 import Settings from "./components/Settings";
 import About from "./components/About";
-import MessengerThread from "./components/MessengerThread";
 import "./styles/App.css";
 
 export default function App() {
