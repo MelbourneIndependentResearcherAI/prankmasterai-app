@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { sendMessage } from "./api";
+import { chatWithAI } from "./api";
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
@@ -22,7 +22,7 @@ export default function Chat() {
     setLoading(true);
 
     try {
-      const reply = await sendMessage(userText);
+      const reply = await chatWithAI(userText);
 
       const botMessage = {
         id: Date.now() + 1,
