@@ -1,6 +1,21 @@
 const API_BASE = "https://your-render-backend-url.onrender.com"; 
 // Replace with your actual Render backend URL
 
+export async function chatWithAI(message) {
+  const res = await fetch(`${API_BASE}/api/chat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message }),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Request failed with status ${res.status}`);
+  }
+
+  const data = await res.json();
+  return data.reply;
+}
+
 export async function sendMessage(threadId, text) {
   const res = await fetch(`${API_BASE}/send`, {
     method: "POST",
